@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const imageList = document.getElementById('image-list');
     const loading = document.getElementById('loading');
-    const recentButton = document.getElementById('recentButton');
+    // const recentButton = document.getElementById('recentButton');
+    const menuButtons = document.querySelectorAll('.dropbtn');
     let imageType = "recent";
     let first_row = 1;
     const row_count = 10;
@@ -84,17 +85,23 @@ document.addEventListener('DOMContentLoaded', function() {
     scrollObserver.observe(loading);
 
     // 버튼 클릭 시 실행할 함수 정의
-    function handleButtonClick() {
+    function handleButtonClick(event) {
         const elementsToDelete = document.querySelectorAll('.image-container');
         // 모든 요소를 삭제
         elementsToDelete.forEach(element => {
             element.remove();
         });
         first_row = 1
+
+        const button = event.currentTarget;
+        imageType = button.getAttribute('data-type');
+        console.log(imageType)
     }
 
-    // 버튼에 클릭 이벤트 리스너 추가
-    recentButton.addEventListener('click', handleButtonClick);
+    // 모든 버튼에 클릭 이벤트 리스너 추가
+    menuButtons.forEach(menuButton => {
+        menuButton.addEventListener('click', handleButtonClick);
+    });
 
     // loadMoreImages(); // 초기 이미지 로드
 
