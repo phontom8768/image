@@ -1,0 +1,94 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    text-align: center;
+    z-index: 1000;
+}
+.menu nav {
+    display: flex;
+    justify-content: space-evenly; /* 좌우 여백을 동일하게 배치 */
+}
+.menu .dropdown {
+    position: relative;
+    display: flex; /* 수정: 플렉스 컨테이너로 설정 */
+    align-items: center; /* 수정: 아이템을 수직 가운데 정렬 */
+}
+
+.menu .dropbtn {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+.menu .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 100%; /* 하위 메뉴를 아래쪽으로 표시 */
+    left: 0; /* 기본 위치를 왼쪽 정렬 */
+    right: 0; /* 오른쪽 정렬을 위한 속성 추가 */
+}
+.menu .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+.menu .dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+.menu .dropdown:hover .dropdown-content {
+    display: block;
+    left: auto; /* 기본 위치를 자동으로 설정 */
+    right: 0; /* 오른쪽 위치를 0으로 고정 */
+}
+.menu .dropdown:first-child .dropdown-content {
+    left: 0; /* 첫 번째 메뉴의 하위 메뉴는 왼쪽에 위치하도록 설정 */
+    right: auto; /* 오른쪽 위치를 자동으로 설정 */
+}
+.menu .dropdown:hover .dropbtn {
+    background-color: #555;
+}
+.content {
+    margin-top: 70px; /* 메뉴 높이만큼 여백을 줌 */
+    padding: 15px;
+}
+.image-container {
+    width: 100%;
+    max-width: 1000px; /* 최대 너비를 1000px로 설정 */
+    margin: 15px auto;
+    position: relative;
+}
+.image-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.placeholder {
+    background-color: #f0f0f0;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #000000;
+}
+@media (max-width: 600px) {
+    .placeholder {
+        height: 300px;
+    }
+}

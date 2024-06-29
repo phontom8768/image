@@ -3,128 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infinite Scroll with Lazy Load</title>
-    <style>
-        .image-container {
-            width: 100%;
-            max-width: 1000px; /* 최대 너비를 1000px로 설정 */
-            margin: 20px auto;
-            position: relative;
-        }
-        .image-container img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        .placeholder {
-            background-color: #f0f0f0;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: #000000;
-        }
-        @media (max-width: 600px) {
-            .placeholder {
-                height: 300px;
-            }
-        }
-    </style>
+    <title>은새 은호</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="image-list"></div>
-    <div id="loading" class="placeholder">Loading more images...</div>
+    <div class="menu">
+        <nav>
+            <div class="dropdown">
+                <button id="recent-image" class="dropbtn">최신</button>
+                <!-- <div class="dropdown-content">
+                    <a href="#">Submenu 1</a>
+                    <a href="#">Submenu 2</a>
+                    <a href="#">Submenu 3</a>
+                </div> -->
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">은새</button>
+                <div class="dropdown-content">
+                    <a href="#">키즈노트-알림장</a>
+                    <a href="#">키즈노트-앨범</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">은호</button>
+                <div class="dropdown-content">
+                    <a href="#">키즈노트-알림장</a>
+                    <a href="#">키즈노트-앨범</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="content">
+        <div id="image-list"></div>
+        <div id="loading" class="placeholder">Loading more images...</div>
+    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const imageList = document.getElementById('image-list');
-            const loading = document.getElementById('loading');
-            let imageCount = 0;
-
-            const loadImage = (container, src) => {
-                const img = document.createElement('img');
-                img.src = src;
-                img.onload = () => {
-                    container.innerHTML = '';
-                    container.appendChild(img);
-                };
-            };
-
-            const addImage = (fileId) => {
-                // imageCount++;
-                const container = document.createElement('div');
-                container.className = 'image-container';
-                // container.setAttribute('data-src', `https://via.placeholder.com/600x400?text=Image+${imageCount}`);
-                container.setAttribute('data-src', `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`);
-                container.innerHTML = '<div class="placeholder">Loading...</div>';
-                imageList.appendChild(container);
-                observer.observe(container);
-            };
-
-            const loadMoreImages = () => {
-                // for (let i = 0; i < 5; i++) {
-                //     addImage();
-                // }
-
-                fetch(`https://a7tggd5ycu.apigw.ntruss.com/image/v1/json/fileIds?imageCount=${imageCount}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok ' + response.statusText);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log(data);
-                        if (data['result'].length == 0) {
-                            loading.textContent = '끝';
-                            return
-                        }
-
-                        for (const element of data['result']) {
-                            addImage(element['fileId'])
-                        }
-                        imageCount = imageCount + 5;
-                    })
-                    .catch(error => {
-                        console.error('There has been a problem with your fetch operation:', error);
-                    });
-            };
-
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.1
-            };
-
-            const observerCallback = (entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        loadImage(entry.target, entry.target.getAttribute('data-src'));
-                        observer.unobserve(entry.target);
-                    }
-                });
-            };
-
-            const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-            const scrollObserverOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 1.0
-            };
-
-            const scrollObserverCallback = (entries) => {
-                if (entries[0].isIntersecting) {
-                    loadMoreImages();
-                }
-            };
-
-            const scrollObserver = new IntersectionObserver(scrollObserverCallback, scrollObserverOptions);
-            scrollObserver.observe(loading);
-
-            // loadMoreImages(); // 초기 이미지 로드
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
