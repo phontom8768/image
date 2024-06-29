@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const imageList = document.getElementById('image-list');
     const loading = document.getElementById('loading');
+    const recentButton = document.getElementById('recentButton');
+    let imageType = "recent";
     let first_row = 1;
     const row_count = 10;
 
@@ -22,8 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(container);
     };
 
-    const loadMoreImages = () => {
-        fetch(`https://a7tggd5ycu.apigw.ntruss.com/image/v1/json/fileIds?first_row=${first_row}&row_count=${row_count}`)
+    const loadMoreImages = (type) => {
+        fetch(`https://a7tggd5ycu.apigw.ntruss.com/image/v1/json/fileIds?image_type=${type}&first_row=${first_row}&row_count=${row_count}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
@@ -74,12 +76,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const scrollObserverCallback = (entries) => {
         if (entries[0].isIntersecting) {
-            loadMoreImages();
+            loadMoreImages(imageType);
         }
     };
 
     const scrollObserver = new IntersectionObserver(scrollObserverCallback, scrollObserverOptions);
     scrollObserver.observe(loading);
+
+    // 버튼 클릭 시 실행할 함수 정의
+    function handleButtonClick() {
+        const elementsToDelete = document.querySelectorAll('.image-container');
+        // 모든 요소를 삭제
+        elementsToDelete.forEach(element => {
+            element.remove();
+        });
+        first_row = 1
+    }
+
+    // 버튼에 클릭 이벤트 리스너 추가
+    recentButton.addEventListener('click', handleButtonClick);
 
     // loadMoreImages(); // 초기 이미지 로드
 

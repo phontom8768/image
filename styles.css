@@ -65,12 +65,12 @@ body {
 }
 .content {
     margin-top: 70px; /* 메뉴 높이만큼 여백을 줌 */
-    padding: 15px;
+    padding: 7px;
 }
 .image-container {
     width: 100%;
     max-width: 1000px; /* 최대 너비를 1000px로 설정 */
-    margin: 15px auto;
+    margin: 7px auto;
     position: relative;
 }
 .image-container img {
