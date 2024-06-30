@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     const imageList = document.getElementById('image-list');
     const loading = document.getElementById('loading');
-    // const recentButton = document.getElementById('recentButton');
-    const menuButtons = document.querySelectorAll('.dropbtn');
-    let imageType = "recent";
+    // const menuButtons = document.querySelectorAll('.get-image-menu');
+    let imageType = 'recent';
     let first_row = 1;
     const row_count = 10;
 
@@ -84,24 +83,64 @@ document.addEventListener('DOMContentLoaded', function() {
     const scrollObserver = new IntersectionObserver(scrollObserverCallback, scrollObserverOptions);
     scrollObserver.observe(loading);
 
-    // 버튼 클릭 시 실행할 함수 정의
-    function handleButtonClick(event) {
+    function imageReset(event) {
+        aMenu = event.target;
+        googleImageFolder_id = aMenu.getAttribute('data-googleImageFolder_id');
+        imageType = googleImageFolder_id;
+
         const elementsToDelete = document.querySelectorAll('.image-container');
         // 모든 요소를 삭제
         elementsToDelete.forEach(element => {
             element.remove();
         });
         first_row = 1
-
-        const button = event.currentTarget;
-        imageType = button.getAttribute('data-type');
-        console.log(imageType)
     }
 
-    // 모든 버튼에 클릭 이벤트 리스너 추가
-    menuButtons.forEach(menuButton => {
-        menuButton.addEventListener('click', handleButtonClick);
-    });
+    const addMenu = (googleImageFolder_id, menuName, googleImageFolderGroup_id) => {
+        const menuContainer = document.createElement('a');
+        menuContainer.className = 'get-image-menu';
+        menuContainer.href = '#';
+        menuContainer.textContent = `알림장 ${menuName}`;
+        menuContainer.setAttribute('data-googleImageFolder_id', googleImageFolder_id);
+
+        const eunsaeMenu = document.getElementById('eunsae-menu');
+        const eunhoMenu = document.getElementById('eunho-menu');
+
+        if (googleImageFolderGroup_id === 1) {
+            menu = eunsaeMenu;
+        } else if (googleImageFolderGroup_id === 2) {
+            menu = eunhoMenu;
+        }
+
+        menuContainer.addEventListener('click', function(event) {
+            imageReset(event);
+        });
+
+        menu.appendChild(menuContainer);
+    };
+
+    const loadMenu = (googleImageFolderGroup_id) => {
+        fetch(`https://a7tggd5ycu.apigw.ntruss.com/image/v1/json/menus?googleImageFolderGroup_id=${googleImageFolderGroup_id}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data['result']);
+
+                for (const element of data['result']) {
+                    addMenu(element['id'], element['name'], googleImageFolderGroup_id);
+                }
+            })
+            .catch(error => {
+                console.error('메뉴API 오류');
+            });
+    };
+
+    loadMenu(1);
+    loadMenu(2);
 
     // loadMoreImages(); // 초기 이미지 로드
 
