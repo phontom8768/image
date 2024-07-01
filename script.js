@@ -96,6 +96,14 @@ document.addEventListener('DOMContentLoaded', function() {
         first_row = 1
     }
 
+    const imageMenus = document.querySelectorAll('.get-image-menu');
+
+    imageMenus.forEach(button => {
+        button.addEventListener('click', function(event) {
+            imageReset(event);
+        });
+    });
+
     const addMenu = (googleImageFolder_id, menuName, googleImageFolderGroup_id) => {
         const menuContainer = document.createElement('a');
         menuContainer.className = 'get-image-menu';
