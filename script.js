@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const imageList = document.getElementById('image-list');
     const loading = document.getElementById('loading');
     // const menuButtons = document.querySelectorAll('.get-image-menu');
-    let imageType = 'recent';
+    let imageType = '44';
     let first_row = 1;
     const row_count = 10;
 
