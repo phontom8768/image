@@ -151,9 +151,9 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     };
 
+    loadMenu(6);
     loadMenu(1);
     loadMenu(2);
-    loadMenu(6);
 
     // loadMoreImages(); // 초기 이미지 로드
 
