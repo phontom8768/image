@@ -40,6 +40,8 @@ body {
     top: 100%; /* 하위 메뉴를 아래쪽으로 표시 */
     left: 0; /* 기본 위치를 왼쪽 정렬 */
     right: 0; /* 오른쪽 정렬을 위한 속성 추가 */
+    max-height: 60vh; /* 최대 높이를 화면의 절반으로 설정 */
+    overflow-y: auto; /* 높이를 초과할 경우 스크롤 생기게 설정 */
 }
 .menu .dropdown-content a {
     color: black;
