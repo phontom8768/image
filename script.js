@@ -108,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const menuContainer = document.createElement('a');
         menuContainer.className = 'get-image-menu';
         menuContainer.href = '#';
-        menuContainer.textContent = `알림장 ${menuName}`;
         menuContainer.setAttribute('data-googleImageFolder_id', googleImageFolder_id);
 
         const eunsaeMenu = document.getElementById('eunsae-menu');
@@ -116,8 +115,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (googleImageFolderGroup_id === 1) {
             menu = eunsaeMenu;
+            menuContainer.textContent = `어린이집 ${menuName}`;
         } else if (googleImageFolderGroup_id === 2) {
             menu = eunhoMenu;
+            menuContainer.textContent = `어린이집 ${menuName}`;
+        } else if (googleImageFolderGroup_id === 6) {
+            menu = eunsaeMenu;
+            menuContainer.textContent = `유치원 ${menuName}`;
         }
 
         menuContainer.addEventListener('click', function(event) {
@@ -149,6 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loadMenu(1);
     loadMenu(2);
+    loadMenu(6);
 
     // loadMoreImages(); // 초기 이미지 로드
 
