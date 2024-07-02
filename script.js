@@ -110,25 +110,28 @@ document.addEventListener('DOMContentLoaded', function() {
         menuContainer.href = '#';
         menuContainer.setAttribute('data-googleImageFolder_id', googleImageFolder_id);
 
-        const eunsaeMenu = document.getElementById('eunsae-menu');
-        const eunhoMenu = document.getElementById('eunho-menu');
-
-        if (googleImageFolderGroup_id === 1) {
-            menu = eunsaeMenu;
-            menuContainer.textContent = `어린이집 ${menuName}`;
-        } else if (googleImageFolderGroup_id === 2) {
-            menu = eunhoMenu;
-            menuContainer.textContent = `어린이집 ${menuName}`;
-        } else if (googleImageFolderGroup_id === 6) {
-            menu = eunsaeMenu;
-            menuContainer.textContent = `유치원 ${menuName}`;
-        }
-
         menuContainer.addEventListener('click', function(event) {
             imageReset(event);
         });
 
-        menu.appendChild(menuContainer);
+        const eunsaeMenu = document.getElementById('eunsae-menu');
+        const eunhoMenu = document.getElementById('eunho-menu');
+        let menu;
+
+        if (googleImageFolderGroup_id === 1) {
+            menu = eunsaeMenu;
+            menuContainer.textContent = `어린이집 ${menuName}`;
+            menu.appendChild(menuContainer);
+        } else if (googleImageFolderGroup_id === 2) {
+            menu = eunhoMenu;
+            menuContainer.textContent = `어린이집 ${menuName}`;
+            menu.appendChild(menuContainer);
+        } else if (googleImageFolderGroup_id === 6) {
+            menu = eunsaeMenu;
+            menuContainer.textContent = `유치원 ${menuName}`;
+            menu.prepend(menuContainer);
+        }
+
     };
 
     const loadMenu = (googleImageFolderGroup_id) => {
@@ -152,8 +155,8 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     loadMenu(6);
-    loadMenu(2);
     loadMenu(1);
+    loadMenu(2);
 
     // loadMoreImages(); // 초기 이미지 로드
 
